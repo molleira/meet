@@ -24,9 +24,12 @@ Visit this [link to the project on gh-pages](https://molleira.github.io/meet/)
   * **When** user starts typing in the city textbox
   * **Then** the user should see a list of cities (suggestions) that match what they’ve typed
 * Scenario 3: User can select a city from the suggested list.
-  * **Given** the user was typing “Berlin” in the city textbox and the list of suggested cities is showing
+  * **Given** the user was typing “Berlin” in the city textbox
+  * And the list of suggested cities is showing
   * **When** the user selects a copy (e.g. “Berlin, Germany”) from the list
-  * **Then** their city should be changed to that city (I.e. “Berlin, Germany”) and the user should receive a list of upcoming events in that city
+  * **Then** their city should be changed to that city (I.e. “Berlin, Germany”)
+  * And the list suggestions should disappear
+  * And the user should receive a list of upcoming events in that city
 
 **02. Show/hide an event’s details**
 </br>User Story: As a user, I should be able to see and hide the details of an event so that I can see more os less information about that single event.
