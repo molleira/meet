@@ -2,6 +2,7 @@
 .App {
   text-align: center;
   padding: 2% 5%;
+  background-color: seashell;
 }
 
 .App * {
@@ -47,6 +48,19 @@ input[type="number"] {
   max-width: 300px;
   margin: auto;
   position: relative;
+  margin-top: 15px;
+}
+
+.EventList {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.EventList > li {
+  margin: 10px;
+  width: auto;
+  background-color: white;
 }
 
 .suggestions {
@@ -78,11 +92,14 @@ input[type="number"] {
 
 .event {
   padding: 10px 10px 35px;
-  margin-bottom: 10px;
   text-align: left;
   border: 1px solid #ccc;
   border-radius: 4px;
   position: relative;
+}
+
+.start-time {
+  margin-bottom: 15px;
 }
 
 .details-btn {
@@ -93,6 +110,8 @@ input[type="number"] {
   border-radius: 4px;
   outline: none;
   cursor: pointer;
+  margin: 5px 0;
+  background-color: seashell;
 }
 
 .name {
@@ -114,7 +133,7 @@ input[type="number"] {
   overflow-x: hidden;
 }
 
-.numberOfEvents {
+.number-of-events {
   width: 200px;
   margin: 20px auto;
   text-align: center;
@@ -209,5 +228,10 @@ input[type="number"] {
     max-width: 50%;
     min-width: auto;
     margin: 0 auto;
+  }
+  .EventList {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
   }
 }
