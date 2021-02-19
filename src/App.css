@@ -232,6 +232,7 @@ input[type="number"] {
   .EventList {
     display: flex;
     flex-direction: row;
+    flex-wrap: wrap;
     justify-content: center;
   }
 }

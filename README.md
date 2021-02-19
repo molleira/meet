@@ -28,34 +28,36 @@ Visit this [link to the project on gh-pages](https://molleira.github.io/meet/)
   * And the list of suggested cities is showing
   * **When** the user selects a copy (e.g. “Berlin, Germany”) from the list
   * **Then** their city should be changed to that city (I.e. “Berlin, Germany”)
-  * And the list suggestions should disappear
-  * And the user should receive a list of upcoming events in that city
+  * the user should receive a list of upcoming events in that city
 
-**02. Show/hide an event’s details**
+**02. Show and hide event details**
 </br>User Story: As a user, I should be able to see and hide the details of an event so that I can see more os less information about that single event.
 * Scenario 1: An event element is collapsed by default.
-  * **Given** the main page is open
-  * **When** the user opens the app
-  * **Then** the user should see a list of upcoming events with their details hidden
+  * **Given** app is loaded
+  * And the list of events has been loaded
+  * **When** user did not click show details button
+  * **Then** event elements will be collapsed
 * Scenario 2: User can expand an event to see its details.
-  * **Given** the main page is open
-  * **When** the user opens the app
-  * **Then** the user should be able to expand an event to see its details
+  * **Given** app is loaded
+  * And the list of events has been loaded
+  * **When** user clicks show details button
+  * **Then** the event element should expand and show details of that event
 * Scenario 3: User can collapse an event to hide its details.
-  * **Given** user expanded an event’s details
-  * **When** the user clicks to hide details
-  * **Then** the details of that event should be hidden
+  * **Given** app is loaded
+  * And the event element is expanded
+  * **When** user clicks hide details button
+  * **Then** the event element should collapse
 
 **03. Specify number of events**
 </br>User Story: As a user, I should be able to specify a number of events I want to see so that I can see more or less events in the list.
-* Scenario 1: When user hasn’t specified a number, 32 is the default number.
-  * **Given** the main page is open
-  * **When** the user opens the app
-  * **Then** the user should see a list of 32 upcoming events by default
+* Scenario 1: If user hasn’t specified a number, 32 is the default number.
+  * **Given** the user did not specify a number of events
+  * **When** app is loaded
+  * **Then** the default number of shown events is 32
 * Scenario 2: User can change the number of events they want to see.
-  * **Given** the main page is open
-  * **When** the selects how many events want to see
-  * **Then** the user should be able to see that exact amount of events in the list
+  * **Given** app is loaded
+  * **When** the user specifies a number
+  * **Then** the app should load a maximum of the specified number of events
 
 **04. Use the app when offline**
 </br>User Story: As a user, I should be able to use the app offline so that I can see the upcoming events when not having an internet connection.

@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import './App.css';
+import logo from './logo192.png';
 import "./nprogress.css";
 
 import EventList from './EventList';
@@ -13,19 +14,6 @@ class App extends Component {
     locations: [],
     numberOfEvents: 32,
     currentLocation: 'all'
-  }
-
-  componentDidMount() {
-    this.mounted = true;
-    getEvents().then((events) => {
-      if (this.mounted) {
-        this.setState({ events, locations: extractLocations(events) });
-      }
-    });
-  }
-
-  componentWillUnmount() {
-    this.mounted = false;
   }
 
   updateEvents = (location, eventCount) => {
@@ -49,11 +37,29 @@ class App extends Component {
         });
       });
     }
+  };
+
+  componentDidMount() {
+    this.mounted = true;
+    getEvents().then((events) => {
+      if (this.mounted) {
+        this.setState({ events, locations: extractLocations(events) });
+      }
+    });
+  }
+
+  componentWillUnmount() {
+    this.mounted = false;
   }
 
   render() {
     return (
       <div className="App">
+        <br></br>
+        <img src={logo} className='logointro' />
+        <h2>Explore upcoming events from Career Foundry</h2>
+        <br></br>
+        <label id="city-label">Select your city: </label>
         <CitySearch locations={this.state.locations} updateEvents={this.updateEvents} />
         <NumberOfEvents numberOfEvents={this.state.numberOfEvents} updateEvents={this.updateEvents} />
         <EventList events={this.state.events} />
