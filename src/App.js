@@ -42,7 +42,7 @@ class App extends Component {
       });
     } else {
       getEvents().then((events) => {
-        const locationEvents = currentLocation === 'all' ? events : events.filter((event) => event.location === currentLocation);
+        const locationEvents = currentLocation === 'all' ? events.events : events.events.filter((event) => event.location === currentLocation);
         const filteredEvents = locationEvents.slice(0, eventCount);
         if (this.mounted) {
           return this.setState({
