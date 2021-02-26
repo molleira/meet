@@ -2,18 +2,10 @@ import axios from 'axios';
 import NProgress from 'nprogress';
 import { mockData } from './mock-data';
 
-const removeQuery = () => {
-  if (window.history.pushState && window.location.pathname) {
-    var newurl =
-      window.location.protocol +
-      "//" +
-      window.location.host +
-      window.location.pathname;
-    window.history.pushState("", "", newurl);
-  } else {
-    newurl = window.location.protocol + "//" + window.location.host;
-    window.history.pushState("", "", newurl);
-  }
+export const extractLocations = (events) => {
+  var extractLocations = events.map((event) => event.location);
+  var locations = [...new Set(extractLocations)];
+  return locations;
 };
 
 const checkToken = async (accessToken) => {
@@ -26,23 +18,17 @@ const checkToken = async (accessToken) => {
   return result;
 };
 
-export const extractLocations = (events) => {
-  var extractLocations = events.map((event) => event.location);
-  var locations = [...new Set(extractLocations)];
-  return locations;
-};
-
 export const getEvents = async () => {
   NProgress.start();
 
-  if (!navigator.onLine) {
-    const storedEvents = localStorage.getItem('lastEvents');
-    const storedLocations = localStorage.getItem('locations');
+  if (!navigator.onLine && !window.location.href.startsWith('http://localhost')) {
+    const storedevents = localStorage.getItem('lastEvents');
+    const storedlocations = localStorage.getItem('locations');
     NProgress.done();
 
     return {
-      events: JSON.parse(storedEvents).events,
-      locations: JSON.parse(storedLocations),
+      events: JSON.parse(storedevents).events,
+      locations: JSON.parse(storedlocations),
     };
   }
 
@@ -90,6 +76,20 @@ export const getAccessToken = async () => {
   }
   return accessToken;
 }
+
+const removeQuery = () => {
+  if (window.history.pushState && window.location.pathname) {
+    var newurl =
+      window.location.protocol +
+      "//" +
+      window.location.host +
+      window.location.pathname;
+    window.history.pushState("", "", newurl);
+  } else {
+    newurl = window.location.protocol + "//" + window.location.host;
+    window.history.pushState("", "", newurl);
+  }
+};
 
 const getToken = async (code) => {
   const encodeCode = encodeURIComponent(code);
