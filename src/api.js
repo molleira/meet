@@ -2,6 +2,20 @@ import axios from 'axios';
 import NProgress from 'nprogress';
 import { mockData } from './mock-data';
 
+const removeQuery = () => {
+  if (window.history.pushState && window.location.pathname) {
+    var newurl =
+      window.location.protocol +
+      "//" +
+      window.location.host +
+      window.location.pathname;
+    window.history.pushState("", "", newurl);
+  } else {
+    newurl = window.location.protocol + "//" + window.location.host;
+    window.history.pushState("", "", newurl);
+  }
+};
+
 const checkToken = async (accessToken) => {
   const result = await fetch(
     `https://www.googleapis.com/oauth2/v1/tokeninfo?access_token=${accessToken}`
@@ -12,8 +26,25 @@ const checkToken = async (accessToken) => {
   return result;
 };
 
+export const extractLocations = (events) => {
+  var extractLocations = events.map((event) => event.location);
+  var locations = [...new Set(extractLocations)];
+  return locations;
+};
+
 export const getEvents = async () => {
   NProgress.start();
+
+  if (!navigator.onLine) {
+    const storedEvents = localStorage.getItem('lastEvents');
+    const storedLocations = localStorage.getItem('locations');
+    NProgress.done();
+
+    return {
+      events: JSON.parse(storedEvents).events,
+      locations: JSON.parse(storedLocations),
+    };
+  }
 
   if (window.location.href.startsWith("http://localhost")) {
     NProgress.done();
@@ -33,14 +64,11 @@ export const getEvents = async () => {
       localStorage.setItem("locations", JSON.stringify(locations));
     }
     NProgress.done();
-    return result.data.events;
+    return {
+      events: result.data.events,
+      locations: extractLocations(result.data.events),
+    };
   }
-};
-
-export const extractLocations = (events) => {
-  var extractLocations = events.map((event) => event.location);
-  var locations = [...new Set(extractLocations)];
-  return locations;
 };
 
 export const getAccessToken = async () => {
@@ -62,20 +90,6 @@ export const getAccessToken = async () => {
   }
   return accessToken;
 }
-
-const removeQuery = () => {
-  if (window.history.pushState && window.location.pathname) {
-    var newurl =
-      window.location.protocol +
-      "//" +
-      window.location.host +
-      window.location.pathname;
-    window.history.pushState("", "", newurl);
-  } else {
-    newurl = window.location.protocol + "//" + window.location.host;
-    window.history.pushState("", "", newurl);
-  }
-};
 
 const getToken = async (code) => {
   const encodeCode = encodeURIComponent(code);
